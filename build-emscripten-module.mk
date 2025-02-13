@@ -38,9 +38,10 @@ $(MODULE_FILE) : $(OBJ_FILES)
 	-s AGGRESSIVE_VARIABLE_ELIMINATION=1 \
 	-s SIDE_MODULE=1 \
 	-s WEBSOCKET_URL=\'$(LOCAL_MODULE)\' \
+	-s ERROR_ON_UNDEFINED_SYMBOLS=0 \
 	-static-libgcc -static-libstdc++ \
 	-o $(MODULE_FILE) $(ARCH_LIBS) $(LDFLAGS) $(OBJ_FILES) $(ARCH_LIBS) $(LIBS) $(LOCAL_LDFLAGS) $(LOCAL_LDLIBS) \
-	-Wl,--no-warn-mismatch -Wl,--no-undefined
+	-Wl,--allow-undefined
 
 clean:
 	rm -f $(OBJ_FILES)
