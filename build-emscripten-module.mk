@@ -1,5 +1,5 @@
 ARCH_LIBS :=
-ARCH_CFLAGS :=
+ARCH_CFLAGS := -fPIC -shared
 LIBS :=
 INCLUDES := $(foreach inc,$(LOCAL_C_INCLUDES),-I$(inc))
 OBJ_FILES := $(LOCAL_SRC_FILES)
@@ -26,7 +26,7 @@ SHELL_JS_PATH := $(shell realpath $(MICRONDK_DIR)/shell_fakedynamiclib.js)
 	$(CC) $(MICRONDK_TARGET_CFLAGS) $(LOCAL_CONLYFLAGS) $(INCLUDES) $(DEFINES) -fPIC -c $< -o $@
 
 %.o : %.cpp
-	$(CXX) $(MICRONDK_TARGET_CFLAGS) $(LOCAL_CPPFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+	$(CXX) $(MICRONDK_TARGET_CFLAGS) $(LOCAL_CPPFLAGS) $(INCLUDES) $(DEFINES) -fPIC -c $< -o $@
 
 LOCAL_LDLIBS := $(filter-out -llog,$(LOCAL_LDLIBS))
 
@@ -39,6 +39,7 @@ $(MODULE_FILE) : $(OBJ_FILES)
 	-s SIDE_MODULE=1 \
 	-s WEBSOCKET_URL=\'$(LOCAL_MODULE)\' \
 	-s ERROR_ON_UNDEFINED_SYMBOLS=0 \
+	-fPIC -shared \
 	-static-libgcc -static-libstdc++ \
 	-o $(MODULE_FILE) $(ARCH_LIBS) $(LDFLAGS) $(OBJ_FILES) $(ARCH_LIBS) $(LIBS) $(LOCAL_LDFLAGS) $(LOCAL_LDLIBS) \
 	-Wl,--allow-undefined
