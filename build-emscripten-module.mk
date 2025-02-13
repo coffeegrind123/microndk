@@ -1,5 +1,5 @@
 ARCH_LIBS :=
-ARCH_CFLAGS := -fPIC -shared
+ARCH_CFLAGS := -fPIC
 LIBS :=
 INCLUDES := $(foreach inc,$(LOCAL_C_INCLUDES),-I$(inc))
 OBJ_FILES := $(LOCAL_SRC_FILES)
@@ -39,7 +39,7 @@ $(MODULE_FILE) : $(OBJ_FILES)
 	-s SIDE_MODULE=1 \
 	-s WEBSOCKET_URL=\'$(LOCAL_MODULE)\' \
 	-s ERROR_ON_UNDEFINED_SYMBOLS=0 \
-	-fPIC -shared \
+	-fPIC \
 	-static-libgcc -static-libstdc++ \
 	-o $(MODULE_FILE) $(ARCH_LIBS) $(LDFLAGS) $(OBJ_FILES) $(ARCH_LIBS) $(LIBS) $(LOCAL_LDFLAGS) $(LOCAL_LDLIBS) \
 	-Wl,--allow-undefined
